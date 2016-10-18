@@ -8,9 +8,13 @@
 
 import UIKit
 
+// 匯入函式庫！！！！ //
 import Firebase
+import FBSDKLoginKit
 
 class ViewController: UIViewController {
+    
+    @IBOutlet weak var image: UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,13 +52,68 @@ class ViewController: UIViewController {
         })
         
         
+        // 上傳圖片到Firebase
+//        let imagesRef = FIRDatabase.database().reference().child("images")
+        let image = UIImage(named: "MyCat")
+        let imageData = UIImageJPEGRepresentation(image!, 1.0)
+//        let imageString = imageData?.base64EncodedString()
+//        
+//        let imageRef = imagesRef.child("MyCat")
+//        imageRef.setValue(imageString)
+        
+        // 用Storage上傳圖片(未完成)
+        // Get a reference to the storage service, using the default Firebase App
+        let storage = FIRStorage.storage()
+        
+        // Create a storage reference from our storage service
+        let storageRef = storage.reference(forURL: "gs://hellofirebase-25df3.appspot.com")
+        
+        // Create a reference to"images/space.jpg"
+        let spaceRef = storageRef.child("images/MyCat.jpg")
+        
+        let uploadTask = spaceRef.put(imageData!, metadata: nil) { metadata, error in
+            if (error != nil) {
+                // Uh-oh, an error occurred!
+            } else {
+                // Metadata contains file metadata such as size, content-type, and download URL.
+                let downloadURL = metadata!.downloadURL
+            }
+        }
+        
+        uploadTask.resume()
+        
+
+        
+        // 製作Facebook Login Button
+        let loginButton = FBSDKLoginButton()
+        loginButton.readPermissions = ["public_profile", "email", "user_friends"]
+        loginButton.center = self.view.center
+        self.view.addSubview(loginButton)
+        
+        // 檢查是否有FB帳號
+        if (FBSDKAccessToken.current() != nil) {
+            print("FB Logined!!!!!!!!!")
+            print("FB Token: \(FBSDKAccessToken.current().tokenString)")
+        }
+        
+        print("~~~~~~~~~~~~~~~~~~~~~")
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
+    
+    // 按下按鈕後，下載&顯示圖片
+    @IBAction func loadImage(_ sender: AnyObject) {
+        let imageRef = FIRDatabase.database().reference().child("images/MyCat")
+        imageRef.observe(.value, with: {
+            snapshot in
+            let imageString = snapshot.value as! String
+            let imageData = Data(base64Encoded: imageString)
+            let image = UIImage(data: imageData!)
+            self.image.image = image
+        })
+    }
 }
 

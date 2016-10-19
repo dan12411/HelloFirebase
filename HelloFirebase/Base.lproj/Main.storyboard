@@ -34,13 +34,61 @@
                                     <action selector="loadImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="q3b-cq-Y73"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PW2-Iq-31b">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="121" id="AJO-Bj-58G"/>
+                                    <constraint firstAttribute="height" constant="30" id="jvl-f5-RMk"/>
+                                </constraints>
+                                <state key="normal" title="Load In Facebook"/>
+                                <connections>
+                                    <action selector="loginFirebase:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ik7-At-2Ff"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kYQ-4H-TxP">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="82" id="0YX-pr-Gce"/>
+                                    <constraint firstAttribute="height" constant="30" id="IgN-jx-woE"/>
+                                </constraints>
+                                <state key="normal" title="Create User"/>
+                                <connections>
+                                    <action selector="createUser:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xje-yh-chE"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yee-oE-TFN">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="99" id="Hbc-gM-Jiy"/>
+                                    <constraint firstAttribute="height" constant="30" id="WJc-fe-ic7"/>
+                                </constraints>
+                                <state key="normal" title="Share Content"/>
+                                <connections>
+                                    <action selector="shareContent:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kTZ-8M-9AT"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dPd-EG-u4f">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="CZz-Rn-MdA"/>
+                                    <constraint firstAttribute="width" constant="69" id="ZdE-vu-dKd"/>
+                                </constraints>
+                                <state key="normal" title="My Profile"/>
+                                <connections>
+                                    <action selector="myProfileWith_sender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dJH-h8-7dn"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="dPd-EG-u4f" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0Np-Lf-jjo"/>
+                            <constraint firstItem="PW2-Iq-31b" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="SNL-xE-WMF"/>
                             <constraint firstItem="db5-0V-zg5" firstAttribute="top" secondItem="q57-Mi-Qmy" secondAttribute="bottom" constant="15" id="Ssd-Ho-hzZ"/>
+                            <constraint firstItem="yee-oE-TFN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bBo-Rf-a8A"/>
                             <constraint firstItem="db5-0V-zg5" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="eX3-nK-wrc"/>
                             <constraint firstItem="q57-Mi-Qmy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fNz-9y-n69"/>
+                            <constraint firstItem="kYQ-4H-TxP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="jD0-aO-sxU"/>
+                            <constraint firstItem="yee-oE-TFN" firstAttribute="top" secondItem="dPd-EG-u4f" secondAttribute="bottom" constant="8" id="lxJ-TG-MMr"/>
+                            <constraint firstItem="q57-Mi-Qmy" firstAttribute="top" secondItem="PW2-Iq-31b" secondAttribute="bottom" constant="8" id="mjY-It-BEE"/>
                             <constraint firstItem="db5-0V-zg5" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="op0-il-diE"/>
+                            <constraint firstItem="PW2-Iq-31b" firstAttribute="top" secondItem="kYQ-4H-TxP" secondAttribute="bottom" constant="8" id="rEX-u4-vIQ"/>
+                            <constraint firstItem="kYQ-4H-TxP" firstAttribute="top" secondItem="yee-oE-TFN" secondAttribute="bottom" constant="8" id="wU8-39-351"/>
                         </constraints>
                     </view>
                     <connections>

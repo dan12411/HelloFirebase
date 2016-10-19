@@ -11,6 +11,8 @@ import UIKit
 // 匯入函式庫！！！！ //
 import Firebase
 import FBSDKLoginKit
+import FirebaseAuth
+import FBSDKShareKit
 
 class ViewController: UIViewController {
     
@@ -61,7 +63,7 @@ class ViewController: UIViewController {
 //        let imageRef = imagesRef.child("MyCat")
 //        imageRef.setValue(imageString)
         
-        // 用Storage上傳圖片(未完成)
+        // 用Storage上傳圖片
         // Get a reference to the storage service, using the default Firebase App
         let storage = FIRStorage.storage()
         
@@ -69,7 +71,7 @@ class ViewController: UIViewController {
         let storageRef = storage.reference(forURL: "gs://hellofirebase-25df3.appspot.com")
         
         // Create a reference to"images/space.jpg"
-        let spaceRef = storageRef.child("images/MyCat.jpg")
+        let spaceRef = storageRef.child("images/gakki.jpg")
         
         let uploadTask = spaceRef.put(imageData!, metadata: nil) { metadata, error in
             if (error != nil) {
@@ -89,14 +91,34 @@ class ViewController: UIViewController {
         loginButton.readPermissions = ["public_profile", "email", "user_friends"]
         loginButton.center = self.view.center
         self.view.addSubview(loginButton)
+        FBSDKProfile.enableUpdates(onAccessTokenChange: true)
         
         // 檢查是否有FB帳號
         if (FBSDKAccessToken.current() != nil) {
             print("FB Logined!!!!!!!!!")
             print("FB Token: \(FBSDKAccessToken.current().tokenString)")
         }
-        
         print("~~~~~~~~~~~~~~~~~~~~~")
+    }
+    
+    // 將使用者登入資料傳到Firebase
+    @IBAction func loginFirebase(_ sender: AnyObject) {
+        if FBSDKAccessToken.current() != nil {
+            let fbToken = FBSDKAccessToken.current().tokenString
+            let fireCredential = FIRFacebookAuthProvider.credential(withAccessToken: fbToken!)
+            FIRAuth.auth()?.signIn(with: fireCredential, completion: {
+                (user, error) in
+                print("error: \(error?.localizedDescription)")
+                print("Uid: \(user?.uid)")
+                print("Name: \(user?.displayName)")
+                
+                self.firebaseUser = user
+            })
+        } else {
+            //
+        }
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -114,6 +136,55 @@ class ViewController: UIViewController {
             let image = UIImage(data: imageData!)
             self.image.image = image
         })
+    }
+    
+    // FB 分享網址
+    @IBAction func shareContent(_ sender: AnyObject) {
+        let content = FBSDKShareLinkContent()
+        content.contentURL = URL(string:"https://www.google.com.tw")
+        FBSDKShareDialog.show(from: self, with: content, delegate: nil)
+    }
+    
+    // 顯示使用者大頭貼
+    @IBAction func myProfile(_sender: AnyObject) {
+        
+        // 方法一 : 利用 API
+        let url = FBSDKProfile.current().imageURL(for: .square, size: CGSize(width: 200, height: 200))
+        let request = NSURLRequest(url: url!)
+        let photoQueue = OperationQueue()
+        NSURLConnection.sendAsynchronousRequest(request as URLRequest, queue: photoQueue, completionHandler: {
+            (response, data, error) in
+            if data != nil {
+                let imagePhoto = UIImage(data: data!)
+                self.image.image = imagePhoto
+            }
+        })
+    
+        // 方法二 : 利用 FBSDKProfilePictureView
+        if let profile = FBSDKProfile.current() {
+            if profile != nil {
+                let imageView = FBSDKProfilePictureView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
+                self.view.addSubview(imageView)
+                imageView.profileID = profile.userID
+            }
+            print("nilnlinilnilnilinilnnll")
+        }
+        print("nilnlinilnilnilinilnnll~~~")
+    }
+    
+    // 將 user 加入 database
+    var firebaseUser: FIRUser?
+    @IBAction func createUser(_ sender: AnyObject) {
+        let rootRef = FIRDatabase.database().reference()
+        let userRef = rootRef.child("users")
+        
+        let userSmart = ["name": "Smart", "age": 15] as [String: Any]
+        
+        if let user = firebaseUser {
+            let smartRef = userRef.child(user.uid)
+            smartRef.setValue(userSmart)
+        }
+        
     }
 }
 

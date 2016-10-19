@@ -12,6 +12,8 @@ import UIKit
 import Firebase
 // 1. 應用程式啟動時連接 Facebook
 import FBSDKCoreKit
+// 1. 
+import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

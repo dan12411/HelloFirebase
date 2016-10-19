@@ -6,8 +6,11 @@ target 'HelloFirebase' do
   use_frameworks!
 
   # Pods for Firebase
+  pod 'Firebase/Auth'
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
+  pod 'FBSDKCoreKit'
   pod 'FBSDKLoginKit'
+  pod 'FBSDKShareKit'
 
 end
